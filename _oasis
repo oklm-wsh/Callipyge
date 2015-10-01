@@ -1,0 +1,38 @@
+OASISFormat:            0.4
+Name:                   callipyge
+Version:                1.4
+Synopsis:               Curve25519
+Description:            Pure OCaml Library for Curve25519
+Authors:                Romain Calascibetta
+Maintainers:            Romain Calascibetta <romain.calascibetta@gmail.com>
+Homepage:               https://github.com/oklm-wsh/Callipyge
+License:                MIT
+Plugins:                META (0.3), DevFiles (0.3)
+BuildTools:             ocamlbuild
+OCamlVersion:           >= 4.01
+AlphaFeatures:          ocamlbuild_more_args
+
+Library callipyge
+  Path:                 lib
+  Modules:              Callipyge
+
+Document "Callipyge"
+  Type:                 ocamlbuild (0.4)
+  BuildTools:           ocamldoc
+  Title:                "Callipyge"
+  PostCommand:          cp Callipyge.docdir/*.html doc/
+  XOCamlbuildPath:      lib
+  XOCamlbuildLibraries: callipyge
+  XOCamlbuildExtraArgs:
+    "-docflags '-colorize-code -keep-code -charset utf-8'"
+
+Executable main
+  Install:              false
+  Path:                 bin
+  MainIs:               main.ml
+  BuildDepends:         callipyge
+
+SourceRepository master
+  Type:       git
+  Location:   https://github.com/oklm-wsh/Callipyge.git
+  Browser:    https://github.com/oklm-wsh/Callipyge
