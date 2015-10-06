@@ -32,6 +32,12 @@ Executable main
   MainIs:               main.ml
   BuildDepends:         callipyge
 
+Executable simple
+  Install:              false
+  Path:                 lib_test
+  MainIs:               simple.ml
+  BuildDepends:         callipyge, alcotest
+
 SourceRepository master
   Type:                 git
   Location:             https://github.com/oklm-wsh/Callipyge.git
