@@ -33,6 +33,6 @@ Executable main
   BuildDepends:         callipyge
 
 SourceRepository master
-  Type:       git
-  Location:   https://github.com/oklm-wsh/Callipyge.git
-  Browser:    https://github.com/oklm-wsh/Callipyge
+  Type:                 git
+  Location:             https://github.com/oklm-wsh/Callipyge.git
+  Browser:              https://github.com/oklm-wsh/Callipyge
