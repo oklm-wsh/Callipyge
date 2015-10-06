@@ -339,9 +339,9 @@ let crypto_scalar_mult q n p =
     (function i when i < 32 -> Array.get p i land 0xFF | _ -> 0) in
   let e = Bytes.init 32 (Bytes.get n) in
 
-  Bytes.set e 0  ((Bytes.get e 0  |> Char.code) land 248 |> Char.chr);
-  Bytes.set e 31 ((Bytes.get e 31 |> Char.code) land 127 |> Char.chr);
-  Bytes.set e 31 ((Bytes.get e 31 |> Char.code) lor  64  |> Char.chr);
+  Bytes.set e 0  ((Bytes.get e 0  |> Char.code) land 248 |> Char.unsafe_chr);
+  Bytes.set e 31 ((Bytes.get e 31 |> Char.code) land 127 |> Char.unsafe_chr);
+  Bytes.set e 31 ((Bytes.get e 31 |> Char.code) lor  64  |> Char.unsafe_chr);
 
   main_loop   work   e;
   recip       work   32    work   32;
@@ -349,7 +349,7 @@ let crypto_scalar_mult q n p =
   freeze      work   64;
 
   for i = 0 to 31 do
-    Array.set q i (Array.get work (64 + i) |> Char.chr) done;
+    Bytes.set q i (Array.get work (64 + i) |> Char.unsafe_chr) done;
 
   0
 
