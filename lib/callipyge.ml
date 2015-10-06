@@ -89,7 +89,7 @@ let mult outv outv_offset a a_offset b b_offset =
         | _ -> u
       in
       aux1 0 0
-      |> fun u -> aux2 u i
+      |> fun u -> aux2 u (i + 1)
       |> Array.set outv (outv_offset + i)
       |> fun () -> aux (i + 1)
     | _ -> squeeze outv outv_offset
@@ -147,8 +147,8 @@ let square outv outv_offset a a_offset =
          (if i land 1 = 0
           then (Array.get a (a_offset + i / 2))
                * (Array.get a (a_offset + i / 2))
-               + 38 * (Array.get a (a_offset + i))
-               * (Array.get a (a_offset + i + 32 - i))
+               + 38 * (Array.get a (a_offset + i / 2 + 16))
+               * (Array.get a (a_offset + i / 2 + 16))
                + u
           else u)
       |> fun u ->
