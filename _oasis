@@ -1,6 +1,6 @@
 OASISFormat:            0.4
 Name:                   callipyge
-Version:                1.4
+Version:                0.1
 Synopsis:               Curve25519
 Description:            Pure OCaml Library for Curve25519
 Authors:                Romain Calascibetta
@@ -9,7 +9,7 @@ Homepage:               https://github.com/oklm-wsh/Callipyge
 License:                MIT
 Plugins:                META (0.3), DevFiles (0.3)
 BuildTools:             ocamlbuild
-OCamlVersion:           >= 4.01
+OCamlVersion:           >= 4.02
 AlphaFeatures:          ocamlbuild_more_args
 
 Library callipyge
