@@ -38,6 +38,12 @@ Executable simple
   MainIs:               simple.ml
   BuildDepends:         callipyge, alcotest
 
+Test test_simple
+  Run$:                 flag(tests)
+  TestTools:            simple
+  Command:              $simple
+  WorkingDirectory:     .
+
 SourceRepository master
   Type:                 git
   Location:             https://github.com/oklm-wsh/Callipyge.git
