@@ -353,6 +353,10 @@ let crypto_scalar_mult q n p =
 
   0
 
+let crypto_scalar_mult' q n p =
+  crypto_scalar_mult q n
+    (Array.init (Bytes.length p) (fun i -> Bytes.unsafe_get p i |> Char.code))
+
 let crypto_scalar_mult_base q n =
   let basevp = basev in
   crypto_scalar_mult q n basevp
