@@ -32,16 +32,28 @@ Executable main
   MainIs:               main.ml
   BuildDepends:         callipyge
 
-Executable simple
+Executable safe_test
   Install:              false
   Path:                 lib_test
-  MainIs:               simple.ml
+  MainIs:               safe.ml
   BuildDepends:         callipyge, alcotest
 
-Test test_simple
+Test safe
   Run$:                 flag(tests)
-  TestTools:            simple
-  Command:              $simple
+  TestTools:            safe_test
+  Command:              $safe_test
+  WorkingDirectory:     .
+
+Executable unsafe_test
+  Install:              false
+  Path:                 lib_test
+  MainIs:               unsafe.ml
+  BuildDepends:         callipyge, alcotest
+
+Test unsafe
+  Run$:                 flag(tests)
+  TestTools:            unsafe_test
+  Command:              $unsafe_test
   WorkingDirectory:     .
 
 SourceRepository master
