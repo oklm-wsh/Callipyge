@@ -1,0 +1,30 @@
+# OASIS_START
+# DO NOT EDIT (digest: a853a9021c6aa1e86822fed59e1a0db1)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library callipyge
+"lib/callipyge.cmxs": use_callipyge
+# Executable simple
+"bin/simple.byte": use_callipyge
+<bin/*.ml{,i,y}>: use_callipyge
+# Executable safe_test
+<lib_test/safe.{native,byte}>: package(alcotest)
+<lib_test/safe.{native,byte}>: use_callipyge
+# Executable unsafe_test
+<lib_test/unsafe.{native,byte}>: package(alcotest)
+<lib_test/unsafe.{native,byte}>: use_callipyge
+<lib_test/*.ml{,i,y}>: package(alcotest)
+<lib_test/*.ml{,i,y}>: use_callipyge
+# OASIS_STOP

@@ -1,0 +1,11 @@
+# OASIS_START
+# DO NOT EDIT (digest: 2e4a95ba8b368745cade48c3ab1c2580)
+version = "0.1"
+description = "Curve25519"
+archive(byte) = "callipyge.cma"
+archive(byte, plugin) = "callipyge.cma"
+archive(native) = "callipyge.cmxa"
+archive(native, plugin) = "callipyge.cmxs"
+exists_if = "callipyge.cma"
+# OASIS_STOP
+
