@@ -16,6 +16,10 @@ Library callipyge
   Path:                 lib
   Modules:              Callipyge
 
+Flag example
+  Description:          Example of use Callipyge
+  Default:              true
+
 Document "Callipyge"
   Type:                 ocamlbuild (0.4)
   BuildTools:           ocamldoc
@@ -26,9 +30,12 @@ Document "Callipyge"
   XOCamlbuildExtraArgs:
     "-docflags '-colorize-code -keep-code -charset utf-8'"
 
+Executable simple
   Install:              false
   Path:                 bin
+  MainIs:               simple.ml
   BuildDepends:         callipyge
+  Build$:               flag(example)
 
 Executable safe_test
   Build$:               flag(tests)

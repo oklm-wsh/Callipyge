@@ -1,3 +1,0 @@
-open Callipyge
-
-let () = ()
