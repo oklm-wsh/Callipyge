@@ -26,17 +26,17 @@ Document "Callipyge"
   XOCamlbuildExtraArgs:
     "-docflags '-colorize-code -keep-code -charset utf-8'"
 
-Executable main
   Install:              false
   Path:                 bin
-  MainIs:               main.ml
   BuildDepends:         callipyge
 
 Executable safe_test
+  Build$:               flag(tests)
   Install:              false
   Path:                 lib_test
   MainIs:               safe.ml
   BuildDepends:         callipyge, alcotest
+  CompiledObject:       best
 
 Test safe
   Run$:                 flag(tests)
@@ -45,10 +45,12 @@ Test safe
   WorkingDirectory:     .
 
 Executable unsafe_test
+  Build$:               flag(tests)
   Install:              false
   Path:                 lib_test
   MainIs:               unsafe.ml
   BuildDepends:         callipyge, alcotest
+  CompiledObject:       best
 
 Test unsafe
   Run$:                 flag(tests)
