@@ -9,8 +9,8 @@
    [9] is base key - in this implementation
      curve25519(a, b, [9]) = curve25519_base(a, b)
 
-   { Alice, Bob }'s shared secret: curve25519(a, curve25519(b, 9))
-   { Bob, Alice }'s shared secret: curve25519(b, curve25519(a, 9))
+   \{ Alice, Bob \}'s shared secret: curve25519(a, curve25519(b, 9))
+   \{ Bob, Alice \}'s shared secret: curve25519(b, curve25519(a, 9))
 
    and curve25519(a, curve25519(b, 9)) = curve25519(b, curve25519(a, 9))
 
