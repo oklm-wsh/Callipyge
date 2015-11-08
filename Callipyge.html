@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Callipyge" rel="Chapter" href="Callipyge.html"><title>Callipyge</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Callipyge.html">Callipyge</a></h1>
+
+<pre><span class="keyword">module</span> Callipyge: <code class="code"><span class="keyword">sig</span></code> <a href="Callipyge.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><div class="info module top">
+<h1 id="1_Introduction">Introduction</h1>
+<p>
+
+   Each Curve25519 user has a 32-byte secret key and a 32-byte public key. Each
+   set of two Curve25519 users has a 32-byte shared secret used to authenticate
+   and encrypt messages between the two users.
+<p>
+
+   Alice has a secret-key <code class="code">a</code>.
+   Bob has a secret-key <code class="code">b</code>.
+   <code class="code">9</code> is base key - in this implementation
+     curve25519(a, b, <code class="code">9</code>) = curve25519_base(a, b)
+<p>
+
+   { Alice, Bob }'s shared secret: curve25519(a, curve25519(b, 9))
+   { Bob, Alice }'s shared secret: curve25519(b, curve25519(a, 9))
+<p>
+
+   and curve25519(a, curve25519(b, 9)) = curve25519(b, curve25519(a, 9))
+<p>
+
+   A hash of the shared secret curve25519(a, curve25519(b, 9)) is used as the
+   key for a secret-key authentification system (to authenticate messages), or
+   as the key for a secret-key authenticated-encryption system (to
+   simultaneously encrypt and authenticate messages).
+<p>
+
+   The curve25519 function is Fp-restricted x-coordinate scalar multiplication
+   on E(Fp^2), where p is the prime number 2^255 - 19 and E is the elliptic
+   curve y^2 = x^3 + 486662 * x^2 + x^2.<br>
+</div>
+<hr width="100%">
+
+<pre><span class="keyword">module type</span> <a href="Callipyge.Array.html">Array</a> = <code class="code"><span class="keyword">sig</span></code> <a href="Callipyge.Array.html">..</a> <code class="code"><span class="keyword">end</span></code></pre>
+<pre><span class="keyword">module</span> <a href="Callipyge.Make.html">Make</a>: <div class="sig_block"><code class="code"><span class="keyword">functor</span> (</code><code class="code"><span class="constructor">X</span></code><code class="code"> : </code><code class="type"><a href="Callipyge.Array.html">Array</a></code><code class="code">) <span class="keywordsign">-&gt;</span> </code><code class="code"><span class="keyword">sig</span></code> <a href="Callipyge.Make.html">..</a> <code class="code"><span class="keyword">end</span></code></div></pre></body></html>
