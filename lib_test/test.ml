@@ -49,8 +49,8 @@ module Make (X : Array) =
 
 
     let make_step e1 e2 k =
-      Printf.sprintf "curve(e2, curve25519(e1, k)) = \
-                      curve25519(e1, curve25519(e2, k))",
+      Printf.sprintf "curve(e2, curve(e1, k)) = \
+                      curve(e1, curve(e2, k))",
       `Quick,
       (fun () ->
         Printf.fprintf stderr "k : %s\n%!" (to_string k );

@@ -20,11 +20,11 @@ Flag example
   Description:          Example of use Callipyge
   Default:              true
 
-Document "Callipyge"
+Document "callipyge"
   Type:                 ocamlbuild (0.4)
   BuildTools:           ocamldoc
   Title:                "Callipyge"
-  PostCommand:          cp Callipyge.docdir/*.html doc/
+  PostCommand:          cp doc/* callipyge.docdir/
   XOCamlbuildPath:      lib
   XOCamlbuildLibraries: callipyge
   XOCamlbuildExtraArgs:
