@@ -6,3 +6,4 @@ doc/*.html
 *.byte
 *.docdir
 *.tar.gz
+_tests
