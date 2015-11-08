@@ -25,7 +25,7 @@ Document "callipyge"
   BuildTools:           ocamldoc
   Title:                "Callipyge"
   PostCommand:          cp doc/* callipyge.docdir/
-  XOCamlbuildPath:      lib
+  XOCamlbuildPath:      .
   XOCamlbuildLibraries: callipyge
   XOCamlbuildExtraArgs:
     "-docflags '-colorize-code -keep-code -charset utf-8'"
