@@ -21,6 +21,13 @@ build-test: [
   [make "test"]
 ]
 
+build-doc: [
+  ["./configure"
+    "--enable-docs"
+    "--prefix=%{prefix}%"]
+  [make "doc"]
+]
+
 install: [make "install"]
 remove: ["ocamlfind" "remove" "callipyge"]
 
