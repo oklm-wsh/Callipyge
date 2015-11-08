@@ -1,4 +1,4 @@
-(** {1 Introduction}
+(** {1 Curve25519}
 
    Each Curve25519 user has a 32-byte secret key and a 32-byte public key. Each
    set of two Curve25519 users has a 32-byte shared secret used to authenticate
