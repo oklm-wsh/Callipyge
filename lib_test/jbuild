@@ -1,0 +1,8 @@
+(executables
+ ((names (safe test unsafe))
+  (libraries (callipyge alcotest))))
+
+(alias
+ ((name    runtest)
+  (deps    (test.exe))
+  (action  (run ${<}))))

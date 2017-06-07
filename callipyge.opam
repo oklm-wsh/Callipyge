@@ -5,34 +5,13 @@ maintainer:   "Romain Calascibetta <romain.calascibetta@gmail.com>"
 authors:      "Romain Calascibetta <romain.calascibetta@gmail.com>"
 homepage:     "https://github.com/oklm-wsh/Callipyge"
 bug-reports:  "https://github.com/oklm-wsh/Callipyge/issues"
-dev-repo:     "https://github.com/oklm-wsh/Callipyge.git"
+dev-repo:     "git+https://github.com/oklm-wsh/Callipyge.git"
 license:      "MIT"
 
-build: [
-  ["./configure"
-    "--prefix=%{prefix}%"]
-  [make]
-]
-
-build-test: [
-  ["./configure"
-    "--enable-tests"
-    "--prefix=%{prefix}%"]
-  [make "test"]
-]
-
-build-doc: [
-  ["./configure"
-    "--enable-docs"
-    "--prefix=%{prefix}%"]
-  [make "doc"]
-]
-
-install: [make "install"]
-remove: ["ocamlfind" "remove" "callipyge"]
+build: [ "jbuilder" "build" "-j" jobs "-p" name "@install" ]
 
 depends: [
-  "oasis" {build}
+  "jbuilder" {build & >= "1.0+beta9"}
   "base-bytes"
   "alcotest" {test}
 ]

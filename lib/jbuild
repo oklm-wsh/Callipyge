@@ -1,0 +1,5 @@
+(library
+ ((name callipyge)
+  (public_name callipyge)
+  (modules (callipyge))
+  (libraries ())))
