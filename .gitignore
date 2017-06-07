@@ -1,8 +1,4 @@
 _build
-setup.data
-setup.log
-*.native
-*.byte
-*.docdir
 *.tar.gz
-_tests
+*.install
+**/*.merlin

@@ -1,0 +1,4 @@
+(executables
+ ((names (simple))
+  (public_names (callipyge-simple))
+  (libraries (callipyge))))
