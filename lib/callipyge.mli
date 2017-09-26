@@ -27,16 +27,36 @@
 module type Array =
   sig
     type t
+    (**  [t] is an abstract array type.
+         The implementation must be able to support a [length] of 96,
+         and values in the range (0 <= value <= 255).
+         [t] is assumed to be in little-endian encoding (LSB first).*)
 
     val get : t -> int -> int
+    (** [get t offset] is the value contained at [offset].*)
     val set : t -> int -> int -> unit
+    (** [set t offset value] sets the cell at [offset] (0-indexed) to [value].*)
     val sub : t -> int -> int -> t
+    (** [sub t offset length] must return a new t of [length] elements,
+        containing the slice of [t] starting at [offset].
+        NOTE that this new value is mutated, so the returned [t] MUST NOT share
+             the underlying storage with the original [t].*)
     val init : int -> (int -> int) -> t
+    (** [init length ([offset] -> [value])] initializes a new array.*)
     val make : int -> int -> t
+    (** [make length value] initializes a new array consisting of [length] cells
+        containing [value].
+        This function is equivalent to [Array.(init length (fun _ -> value))].*)
   end
 
 module Make (X : Array) :
   sig
     val curve25519 : X.t -> X.t -> X.t -> int
+    (** [curve25519 q n p] computes the shared secret between secret key [n]
+       and public key [p]. The result is stored in [q].
+       [curve25519] always returns 0.*)
+
     val curve25519_base : X.t -> X.t -> int
+    (** [curve25519_base q n] is equivalent to [curve25519] with secret key [n]
+        and the base point (9), with the resulting public key stored in [q].*)
   end
