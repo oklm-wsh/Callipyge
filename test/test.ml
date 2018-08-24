@@ -10,7 +10,7 @@ let pp_secret ppf (arr:secret_key) = pp_base ppf (arr :> int array)
 let ctx = Callipyge.make_ctx ()
 
 let doit out (secret: secret_key) (public: public_key) =
-    Fmt.pr "%a %a " pp_secret secret Callipyge.pp_key public
+    Fmt.pr "%a %a " pp_secret secret Callipyge.pp_public_key public
   ; Callipyge.ecdh ~ctx ~out ~secret ~public
   ; Fmt.pr "%a\n%!" pp_base out
 
@@ -47,9 +47,9 @@ let step (e1: secret_key) (e2: secret_key) (k: public_key) =
     let e2e1k = Array.make 32 0 in
 
     let () = doit e1k e1 k in
-    let () = doit e2e1k e2 (Obj.magic e1k) in
+    let () = doit e2e1k e2 (Callipyge.public_key_of_int_array e1k) in
     let () = doit e2k e2 k in
-    let () = doit e1e2k e1 (Obj.magic e2k) in
+    let () = doit e1e2k e1 (Callipyge.public_key_of_int_array e2k) in
 
     Alcotest.(check (ecdh e1k e2k)) "equal" e1e2k e2e1k
 

@@ -471,6 +471,7 @@ let curve25519_base q n =
 type _ key = int array
 type public = P
 type secret = S
+type shared = SS
 
 external identity: 'a -> 'a = "%identity"
 let (<.>) f g = fun x -> f (g x)
@@ -482,6 +483,13 @@ let secret_key_of_string
     then Fmt.invalid_arg "secret_key_of_string: key should consist of 32 bytes";
     Array.init 32 (Char.code <.> String.get x)
 
+let secret_key_of_int_array
+  : int array -> secret key
+  = fun x ->
+    if Array.length x <> 32 || Array.exists (fun x -> x > 0xFF) x
+    then Fmt.invalid_arg "public_key_of_int_array: key should consist of 32 bytes";
+    identity x
+
 let null = String.make 32 '\x00'
 
 let public_key_of_string
@@ -492,6 +500,15 @@ let public_key_of_string
     if String.equal x null
     then Fmt.invalid_arg "public_key_of_string: null public key";
     Array.init 32 (Char.code <.> String.get x)
+
+let public_key_of_int_array
+  : int array -> public key
+  = fun x ->
+    if Array.length x <> 32 || Array.exists (fun x -> x > 0xFF) x
+    then Fmt.invalid_arg "public_key_of_int_array: key should consist of 32 bytes";
+    if Array.for_all ((=) 0) x
+    then Fmt.invalid_arg "public_key_of_int_array: null public key";
+    identity x
 
 let string_of_key
   : _ key -> string
@@ -516,13 +533,17 @@ let public_of_secret
   ; r
 
 let shared
-  : ctx:ctx -> secret:secret key -> public:public key -> public key
+  : ctx:ctx -> secret:secret key -> public:public key -> shared key
   = fun ~ctx ~secret ~public ->
   let r = Array.make 32 0 in
     ecdh ctx r secret public
   ; r
 
-let pp_key: _ key Fmt.t = fun ppf key -> pp ppf (A.ro key)
+let public_key_of_shared x = identity x [@@noalloc] [@@inline]
+let secret_key_of_shared x = identity x [@@noalloc] [@@inline]
+
+let pp_public_key: public key Fmt.t = fun ppf key -> pp ppf (A.ro key)
+let pp_shared_key: shared key Fmt.t = fun ppf key -> pp ppf (A.ro key)
 
 let equal_key: _ key -> _ key -> bool
   = fun a b ->
