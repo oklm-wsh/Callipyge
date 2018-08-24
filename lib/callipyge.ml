@@ -124,6 +124,15 @@ let square outv outv_offset a a_offset =
       incr j;
     done;
 
+    j := i + 1;
+
+    while !j < i + 32 - !j do
+      u := !u + (38
+                 * (Array.get a (a_offset + !j))
+                 * (Array.get a (a_offset + i + 32 - !j)));
+      incr j;
+    done;
+
     u := !u * 2;
 
     if i land 1 = 0
