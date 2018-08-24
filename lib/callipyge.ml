@@ -482,11 +482,15 @@ let secret_key_of_string
     then Fmt.invalid_arg "secret_key_of_string: key should consist of 32 bytes";
     Array.init 32 (Char.code <.> String.get x)
 
+let null = String.make 32 '\x00'
+
 let public_key_of_string
   : string -> public key
   = fun x ->
     if String.length x <> 32
     then Fmt.invalid_arg "public_key_of_string: key should consist of 32 bytes";
+    if String.equal x null
+    then Fmt.invalid_arg "public_key_of_string: null public key";
     Array.init 32 (Char.code <.> String.get x)
 
 let string_of_key
