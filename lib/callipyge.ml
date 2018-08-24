@@ -363,10 +363,23 @@ let string_of_key
     (* assert (Array.length x = 32); *)
     String.init 32 (Char.chr <.> Array.get x)
 
-let ecdh_base: public key -> secret key -> unit = curve25519_base
-let ecdh: public key -> secret key -> int array -> unit = curve25519
+let ecdh_base: int array -> secret key -> unit = curve25519_base
+let ecdh: int array -> secret key -> public key -> unit = curve25519
 
-let public_of_secret: secret key -> public key = identity
+let public_of_secret
+  : secret key -> public key
+  = fun n ->
+  let r = Array.make 32 0 in
+    ecdh_base r n
+  ; r
+
+let shared
+  : secret key -> public key -> public key
+  = fun n p ->
+  let r = Array.make 32 0 in
+    ecdh r n p
+  ; r
+
 let pp_key: _ key Fmt.t = pp
 
 let equal_key: _ key -> _ key -> bool
