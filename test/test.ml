@@ -7,12 +7,10 @@ type secret_key = Callipyge.secret Callipyge.key
 
 let pp_secret ppf (arr:secret_key) = pp_base ppf (arr :> int array)
 
-let ctx = Callipyge.make_ctx ()
-
-let doit out (secret: secret_key) (public: public_key) =
-    Fmt.pr "%a %a " pp_secret secret Callipyge.pp_public_key public
-  ; Callipyge.ecdh ~ctx ~out ~secret ~public
-  ; Fmt.pr "%a\n%!" pp_base out
+let doit ek (e: secret_key) (k: public_key) =
+    Fmt.pr "%a %a " pp_secret e Callipyge.pp_public_key k
+  ; Callipyge.ecdh ~out:ek ~secret:e ~public:k
+  ; Fmt.pr "%a\n%!" pp_base ek
 
 let ecdh (e1: secret_key) (e2: secret_key) (k: public_key) e1k e2k =
   let equal e1e2k e2e1k =
