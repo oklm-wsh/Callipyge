@@ -1,0 +1,15 @@
+B /home/dinosaure/.opam/4.06.1/lib/benchmark
+B /home/dinosaure/.opam/4.06.1/lib/fmt
+B /home/dinosaure/.opam/4.06.1/lib/ocaml
+B /home/dinosaure/.opam/4.06.1/lib/result
+B /home/dinosaure/.opam/4.06.1/lib/uchar
+B ../_build/default/bench/.bench.eobjs
+B ../_build/default/lib/.callipyge.objs
+S /home/dinosaure/.opam/4.06.1/lib/benchmark
+S /home/dinosaure/.opam/4.06.1/lib/fmt
+S /home/dinosaure/.opam/4.06.1/lib/ocaml
+S /home/dinosaure/.opam/4.06.1/lib/result
+S /home/dinosaure/.opam/4.06.1/lib/uchar
+S .
+S ../lib
+FLG -w -40
