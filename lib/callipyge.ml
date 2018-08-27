@@ -1,3 +1,5 @@
+module Array = Ma
+
 let basev =
   Array.init 32 (function 0 -> 9 | _ -> 0)
 
