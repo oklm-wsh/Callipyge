@@ -1,42 +1,59 @@
-(** {1 Curve25519}
+type _ key = private int array
+(** Type of keys. *)
 
-   Each Curve25519 user has a 32-byte secret key and a 32-byte public key. Each
-   set of two Curve25519 users has a 32-byte shared secret used to authenticate
-   and encrypt messages between the two users.
+and public
+and secret
+and shared
 
-   Alice has a secret-key [a].
-   Bob has a secret-key [b].
-   [9] is base key - in this implementation
-     curve25519(a, b, [9]) = curve25519_base(a, b)
+val base: public key
 
-   \{ Alice, Bob \}'s shared secret: curve25519(a, curve25519(b, 9))
-   \{ Bob, Alice \}'s shared secret: curve25519(b, curve25519(a, 9))
+val secret_key_of_string: string -> secret key
+(** [secret_key_of_string v] is secret key of a 32-bytes [string] [v]. It makes
+   a fresh {!secret key}. *)
 
-   and curve25519(a, curve25519(b, 9)) = curve25519(b, curve25519(a, 9))
+val secret_key_of_int_array: int array -> secret key
+(** [secret_key_of_string v] is secret key of a 32-bytes [int array] [v]. It
+   only verifies [v]. *)
 
-   A hash of the shared secret curve25519(a, curve25519(b, 9)) is used as the
-   key for a secret-key authentification system (to authenticate messages), or
-   as the key for a secret-key authenticated-encryption system (to
-   simultaneously encrypt and authenticate messages).
+val public_key_of_string: string -> public key
+(** [public_key_of_string v] is public key of 32-bytes [string] [v]. Null public
+   key ([String.make 32 '\x00']) is not allowed. It makes a fresh {!public key}.
+   *)
 
-   The curve25519 function is Fp-restricted x-coordinate scalar multiplication
-   on E(Fp^2), where p is the prime number 2^255 - 19 and E is the elliptic
-   curve y^2 = x^3 + 486662 * x^2 + x^2.
-*)
+val public_key_of_int_array: int array -> public key
+(** [public_key_of_int_array v] is public key of 32-bytes [int array] [v]. It
+   only verifies [v]. Null public key ([Array.make 32 0]) is not allowed. *)
 
-module type Array =
-  sig
-    type t
+val string_of_key: _ key -> string
+(** [string_of_key k] makes a fresh [string] of [k]. *)
 
-    val get : t -> int -> int
-    val set : t -> int -> int -> unit
-    val sub : t -> int -> int -> t
-    val init : int -> (int -> int) -> t
-    val make : int -> int -> t
-  end
+val ecdh: out:int array -> secret:secret key -> public:public key -> unit
+(** [ecdh ~out ~secret ~public] computes [curve25519] on [out] from secret key
+   [secret] and public key [public]. *)
 
-module Make (X : Array) :
-  sig
-    val curve25519 : X.t -> X.t -> X.t -> int
-    val curve25519_base : X.t -> X.t -> int
-  end
+val ecdh_base: out:int array -> secret:secret key -> unit
+(** [ecdh_base ~out ~secret] is [ecdh ~out ~secret ~public:base] (see {!base}).
+   *)
+
+val public_of_secret: secret key -> public key
+(** [public_of_secret k] is public key of [k]. It makes a fresh public key. *)
+
+val shared: secret:secret key -> public:public key -> shared key
+(** [shared ~secret ~public] is shared key of secret key [secret] and public key
+   [public]. It makes a fresh shared key. *)
+
+val public_key_of_shared: shared key -> public key
+(** [public_key_of_shared k] maps [k] to be a public key. *)
+
+val secret_key_of_shared: shared key -> secret key
+(** [secret_key_of_shared k] maps [k] to be a secret key. *)
+
+val pp_public_key: public key Fmt.t
+(** [pp_public_key ppf v] prints public key [v] on [ppf]. *)
+
+val pp_shared_key: shared key Fmt.t
+(** [pp_shared_key ppf v] prints shared key [v] on [ppf]. *)
+
+val equal_key: 'a key -> 'a key -> bool
+(** [equal_key k1 k2] returns [true] iff [k1 = k2]. Otherwise, it returns
+   [false]. *)
