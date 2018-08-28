@@ -4,16 +4,24 @@ let random_key len =
   close_in ic; rs
 
 let bench () =
-  let secret = Callipyge.secret_key_of_string (random_key 32) in
-  let public = Callipyge.public_key_of_string (random_key 32) in
+  let secret = random_key 32 in
+  let public = random_key 32 in
 
-  let f () = Callipyge.shared ~secret ~public in
+  let f () =
+    let _ = Callipyge.shared
+        ~secret:(Callipyge.secret_key_of_string secret)
+        ~public:(Callipyge.public_key_of_string public) in
+    () in
+  let g () =
+    let _ = Donna.shared ~secret ~public in
+    () in
 
-  Benchmark.throughputN 1 [ "callipyge", f, () ]
+  Benchmark.throughputN 1 [ "callipyge", f, ()
+                          ; "donna", g, () ]
 
 let () =
   let open Benchmark.Tree in
 
-  register @@ "callipyge" @>>> [ "ecdh" @> lazy (bench ()) ]
+  register @@ "benchmark" @>>> [ "ECDH" @> lazy (bench ()) ]
 
 let () = Benchmark.Tree.run_global ()
