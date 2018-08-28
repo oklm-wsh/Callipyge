@@ -67,6 +67,35 @@ let tests n =
     | 0 -> acc | n -> go (step :: acc) (pred n) in
   go [] n
 
+let public = Alcotest.testable Callipyge.pp_public_key Callipyge.equal_key
+let shared = Alcotest.testable Callipyge.pp_shared_key Callipyge.equal_key
+
+let nacl =
+  let p_a = Callipyge.public_key_of_string
+      "\x85\x20\xf0\x09\x89\x30\xa7\x54\x74\x8b\x7d\xdc\xb4\x3e\xf7\x5a\x0d\xbf\x3a\x0d\x26\x38\x1a\xf4\xeb\xa4\xa9\x8e\xaa\x9b\x4e\x6a" in
+  let s_a = Callipyge.secret_key_of_string
+      "\x77\x07\x6d\x0a\x73\x18\xa5\x7d\x3c\x16\xc1\x72\x51\xb2\x66\x45\xdf\x4c\x2f\x87\xeb\xc0\x99\x2a\xb1\x77\xfb\xa5\x1d\xb9\x2c\x2a" in
+  let p_b = Callipyge.public_key_of_string
+      "\xde\x9e\xdb\x7d\x7b\x7d\xc1\xb4\xd3\x5b\x61\xc2\xec\xe4\x35\x37\x3f\x83\x43\xc8\x5b\x78\x67\x4d\xad\xfc\x7e\x14\x6f\x88\x2b\x4f" in
+  let s_b = Callipyge.secret_key_of_string
+      "\x5d\xab\x08\x7e\x62\x4a\x8a\x4b\x79\xe1\x7f\x8b\x83\x80\x0e\xe6\x6f\x3b\xb1\x29\x26\x18\xb6\xfd\x1c\x2f\x8b\x27\xff\x88\xe0\xeb" in
+
+  let p_alice () =
+    Alcotest.(check public) "equal" (Callipyge.public_of_secret s_a) p_a in
+
+  let p_bob () =
+    Alcotest.(check public) "equal" (Callipyge.public_of_secret s_b) p_b in
+
+  let p_shared () =
+    let s_ab = Callipyge.shared ~secret:s_a ~public:p_b in
+    let s_ba = Callipyge.shared ~secret:s_b ~public:p_a in
+
+    Alcotest.(check shared) "equal" s_ab s_ba in
+
+  [ "alice", `Quick, p_alice
+  ; "bob", `Quick, p_bob
+  ; "shared", `Quick, p_shared ]
+
 let () =
   Alcotest.run "ECDH"
     [ "5 steps", tests 5
@@ -74,4 +103,5 @@ let () =
     ; "20 steps", tests 20
     ; "40 steps", tests 40
     ; "80 steps", tests 80
-    ; "160 steps", tests 160 ]
+    ; "160 steps", tests 160
+    ; "nacl", nacl ]
