@@ -55,12 +55,7 @@ let squeeze a a_offset =
   Array.set a (a_offset + 31) !u
 
 let freeze a a_offset =
-  let a_orig = Array.make 32 0 in
-
-  for j = 0 to 31 do
-    Array.set a_orig j (Array.get a (a_offset + j));
-  done;
-
+  let a_orig = Array.init 32 (fun j -> Array.get a (a_offset + j)) in
   add a 0 a 0 minusp 0;
   let negative = - (((Array.get a (a_offset + 31)) lsr 7) land 1) in
 
