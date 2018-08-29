@@ -6,41 +6,45 @@ and secret
 and shared
 
 val base: public key
+(** The base point 9. *)
 
 val secret_key_of_string: string -> secret key
 (** [secret_key_of_string v] is secret key of a 32-bytes [string] [v]. It makes
-   a fresh {!secret key}. *)
+   a fresh allocated {!secret key}. *)
 
 val secret_key_of_int_array: int array -> secret key
 (** [secret_key_of_string v] is secret key of a 32-bytes [int array] [v]. It
-   only verifies [v]. *)
+   only verifies [v] (no allocation). *)
 
 val public_key_of_string: string -> public key
 (** [public_key_of_string v] is public key of 32-bytes [string] [v]. Null public
-   key ([String.make 32 '\x00']) is not allowed. It makes a fresh {!public key}.
-   *)
+   key ([String.make 32 '\x00']) is not allowed. It makes a fresh allocated
+   {!public key}. *)
 
 val public_key_of_int_array: int array -> public key
 (** [public_key_of_int_array v] is public key of 32-bytes [int array] [v]. It
-   only verifies [v]. Null public key ([Array.make 32 0]) is not allowed. *)
+   only verifies [v] (no allocation). Null public key ([Array.make 32 0]) is not
+   allowed. *)
 
 val string_of_key: _ key -> string
-(** [string_of_key k] makes a fresh [string] of [k]. *)
+(** [string_of_key k] makes a fresh allocated [string] of [k]. *)
 
 val ecdh: out:int array -> secret:secret key -> public:public key -> unit
-(** [ecdh ~out ~secret ~public] computes [curve25519] on [out] from secret key
-   [secret] and public key [public]. *)
+(** [ecdh ~out ~secret ~public] computes the shared secret between secret key
+   [secret] and public key [public]. The result is stored in [out]. *)
 
 val ecdh_base: out:int array -> secret:secret key -> unit
-(** [ecdh_base ~out ~secret] is [ecdh ~out ~secret ~public:base] (see {!base}).
-   *)
+(** [ecdh_base ~out ~secret] is eqauivalent to {!ecdh} with the secret key
+   [secret] and the base point {!base}, with the resulting public key stored in
+   [out]. *)
 
 val public_of_secret: secret key -> public key
-(** [public_of_secret k] is public key of [k]. It makes a fresh public key. *)
+(** [public_of_secret k] is public key of [k]. It makes a fresh allocated public
+   key. *)
 
 val shared: secret:secret key -> public:public key -> shared key
-(** [shared ~secret ~public] is shared key of secret key [secret] and public key
-   [public]. It makes a fresh shared key. *)
+(** [shared ~secret ~public] computes the shared secret between secret key
+   [secret] and public key [public]. It makes a fresh allocated result. *)
 
 val public_key_of_shared: shared key -> public key
 (** [public_key_of_shared k] maps [k] to be a public key. *)
