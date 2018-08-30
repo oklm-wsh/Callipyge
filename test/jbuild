@@ -1,6 +1,14 @@
+(library
+ ((name oracle)
+  (modules (oracle))
+  (c_names (curve25519-donna))))
+
 (executable
  ((name test)
-  (libraries (callipyge fmt alcotest))))
+  (modules (test))
+  (libraries (callipyge oracle fmt alcotest))))
+
+(rule (copy# ../bench/curve25519-donna.c curve25519-donna.c))
 
 (alias
  ((name runtest)
