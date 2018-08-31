@@ -4,7 +4,6 @@ let pp_base ppf arr =
   done
 
 type public_key = Callipyge.public Callipyge.key
-
 type secret_key = Callipyge.secret Callipyge.key
 
 let pp_secret ppf (arr : secret_key) = pp_base ppf (arr :> int array)
@@ -25,7 +24,8 @@ let ecdh (e1 : secret_key) (e2 : secret_key) (k : public_key) e1k e2k =
       !rt = 0
     in
     Fmt.epr "%a equal %a: %b.\n%!" pp_base e1e2k pp_base e2e1k result ;
-    if result then (
+    if result
+    then (
       Array.iteri
         (fun i x -> (e1 :> int array).(i) <- x lxor (e2k :> int array).(i))
         (e1 :> int array) ;
@@ -126,9 +126,7 @@ let nacl =
     let s_ba = Callipyge.shared ~secret:s_b ~public:p_a in
     Alcotest.(check shared) "equal" s_ab s_ba
   in
-  [ ("alice", `Quick, p_alice)
-  ; ("bob", `Quick, p_bob)
-  ; ("shared", `Quick, p_shared) ]
+  ["alice", `Quick, p_alice; "bob", `Quick, p_bob; "shared", `Quick, p_shared]
 
 let random_key () =
   let ic = open_in_bin "/dev/urandom" in
@@ -176,15 +174,15 @@ let oracle =
       (Callipyge.string_of_key callipyge_p_b)
       donna_p_b
   in
-  list_init (fun () -> ("oracle", `Quick, test)) 64
+  list_init (fun () -> "oracle", `Quick, test) 64
 
 let () =
   Alcotest.run "ECDH"
-    [ ("5 steps", tests 5)
-    ; ("10 steps", tests 10)
-    ; ("20 steps", tests 20)
-    ; ("40 steps", tests 40)
-    ; ("80 steps", tests 80)
-    ; ("160 steps", tests 160)
-    ; ("nacl", nacl)
-    ; ("oracle", oracle) ]
+    [ "5 steps", tests 5
+    ; "10 steps", tests 10
+    ; "20 steps", tests 20
+    ; "40 steps", tests 40
+    ; "80 steps", tests 80
+    ; "160 steps", tests 160
+    ; "nacl", nacl
+    ; "oracle", oracle ]
