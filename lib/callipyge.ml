@@ -378,4 +378,4 @@ let pp_shared_key : shared key Fmt.t = fun ppf key -> pp ppf key
 let equal_key : _ key -> _ key -> bool =
  fun a b ->
   (* assert (Array.length a = 32 && Array.length b = 32); *)
-  Eqaf.C.equal (string_of_key a) (string_of_key b)
+  Eqaf.equal (string_of_key a) (string_of_key b)
