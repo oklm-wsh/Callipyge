@@ -6,3 +6,4 @@ setup.log
 *.docdir
 *.tar.gz
 _tests
+.merlin
