@@ -208,7 +208,7 @@ let recip outv outv_offset z z_offset =
   (* 2^12 - 2^2 *)
   
   (* 2^20 - 2^10 *)
-  for i = 1 to 4 do
+  for _ = 1 to 4 do
     square t0 0 t1 0 ; square t1 0 t0 0
   done ;
   mult z2_20_0 0 t1 0 z2_10_0 0 ;
@@ -219,7 +219,7 @@ let recip outv outv_offset z z_offset =
   (* 2^22 - 2^2 *)
   
   (* 2^40 - 2^40 *)
-  for i = 1 to 9 do
+  for _ = 1 to 9 do
     square t0 0 t1 0 ; square t1 0 t0 0
   done ;
   mult t0 0 t1 0 z2_20_0 0 ;
@@ -230,7 +230,7 @@ let recip outv outv_offset z z_offset =
   (* 2^42 - 2^2 *)
   
   (* 2^50 - 2^10 *)
-  for i = 1 to 4 do
+  for _ = 1 to 4 do
     square t1 0 t0 0 ; square t0 0 t1 0
   done ;
   mult z2_50_0 0 t0 0 z2_10_0 0 ;
@@ -241,7 +241,7 @@ let recip outv outv_offset z z_offset =
   (* 2^52 - 2^2 *)
   
   (* 2^100 - 2^50 *)
-  for i = 1 to 24 do
+  for _ = 1 to 24 do
     square t0 0 t1 0 ; square t1 0 t0 0
   done ;
   mult z2_100_0 0 t1 0 z2_50_0 0 ;
@@ -252,7 +252,7 @@ let recip outv outv_offset z z_offset =
   (* 2^102 - 2^2 *)
   
   (* 2^200 - 2^100 *)
-  for i = 1 to 49 do
+  for _ = 1 to 49 do
     square t1 0 t0 0 ; square t0 0 t1 0
   done ;
   mult t1 0 t0 0 z2_100_0 0 ;
@@ -263,7 +263,7 @@ let recip outv outv_offset z z_offset =
   (* 2^202 - 2^2 *)
   
   (* 2^250 - 2^50 *)
-  for i = 1 to 24 do
+  for _ = 1 to 24 do
     square t0 0 t1 0 ; square t1 0 t0 0
   done ;
   mult t0 0 t1 0 z2_50_0 0 ;
@@ -308,9 +308,9 @@ let curve25519_base q n =
   curve25519 q n basevp
 
 type _ key = int array
-type public = P
-type secret = S
-type shared = SS
+type public
+type secret
+type shared
 
 external identity : 'a -> 'a = "%identity"
 
@@ -362,14 +362,16 @@ let ecdh_inplace :
  fun ~out ~secret ~public -> curve25519 out secret public
 
 let public_of_secret : secret key -> public key =
- fun n ->
-  let r = Array.make 32 0 in
-  ecdh_base_inplace r n ; r
+ fun secret ->
+  let out = Array.make 32 0 in
+  ecdh_base_inplace ~out ~secret ;
+  out
 
 let shared : secret:secret key -> public:public key -> public key =
- fun ~secret:n ~public:p ->
-  let r = Array.make 32 0 in
-  ecdh_inplace r n p ; r
+ fun ~secret ~public ->
+  let out = Array.make 32 0 in
+  ecdh_inplace ~out ~secret ~public ;
+  out
 
 let[@noalloc] [@inline] public_key_of_shared x = identity x
 let[@noalloc] [@inline] secret_key_of_shared x = identity x

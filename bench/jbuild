@@ -1,9 +1,0 @@
-(library
- ((name donna)
-  (modules (donna))
-  (c_names (curve25519-donna))))
-
-(executable
- ((name bench)
-  (modules (bench))
-  (libraries (callipyge donna benchmark))))

@@ -9,8 +9,8 @@ doc:          "https://oklm-wsh.github.io/callipyge/"
 license:      "MIT"
 
 build: [
-  ["jbuilder" "subst" "-p" name] {pinned}
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "subst" "-p" name] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
 
