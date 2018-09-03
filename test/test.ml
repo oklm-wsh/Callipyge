@@ -10,7 +10,7 @@ let pp_secret ppf (arr : secret_key) = pp_base ppf (arr :> int array)
 
 let doit ek (e : secret_key) (k : public_key) =
   Fmt.pr "%a %a " pp_secret e Callipyge.pp_public_key k ;
-  Callipyge.ecdh ~out:ek ~secret:e ~public:k ;
+  Callipyge.ecdh_inplace ~out:ek ~secret:e ~public:k ;
   Fmt.pr "%a\n%!" pp_base ek
 
 let ecdh (e1 : secret_key) (e2 : secret_key) (k : public_key) e1k e2k =
