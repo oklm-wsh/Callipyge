@@ -364,12 +364,12 @@ let ecdh_inplace :
 let public_of_secret : secret key -> public key =
  fun n ->
   let r = Array.make 32 0 in
-  ecdh_base r n ; r
+  ecdh_base_inplace r n ; r
 
 let shared : secret:secret key -> public:public key -> public key =
  fun ~secret:n ~public:p ->
   let r = Array.make 32 0 in
-  ecdh r n p ; r
+  ecdh_inplace r n p ; r
 
 let[@noalloc] [@inline] public_key_of_shared x = identity x
 let[@noalloc] [@inline] secret_key_of_shared x = identity x
