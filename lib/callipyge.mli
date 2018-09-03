@@ -31,14 +31,15 @@ val public_key_of_int_array : int array -> public key
 val string_of_key : _ key -> string
 (** [string_of_key k] makes a fresh allocated [string] of [k]. *)
 
-val ecdh : out:int array -> secret:secret key -> public:public key -> unit
-(** [ecdh ~out ~secret ~public] computes the shared secret between secret key
-    [secret] and public key [public]. The result is stored in [out]. *)
+val ecdh_inplace :
+  out:int array -> secret:secret key -> public:public key -> unit
+(** [ecdh_inplace ~out ~secret ~public] computes the shared secret between
+    secret key [secret] and public key [public]. The result is stored in [out]. *)
 
-val ecdh_base : out:int array -> secret:secret key -> unit
-(** [ecdh_base ~out ~secret] is eqauivalent to {!ecdh} with the secret key
-    [secret] and the base point {!base}, with the resulting public key stored
-    in [out]. *)
+val ecdh_base_inplace : out:int array -> secret:secret key -> unit
+(** [ecdh_base_inplace ~out ~secret] is eqauivalent to {!ecdh} with the secret
+    key [secret] and the base point {!base}, with the resulting public key
+    stored in [out]. *)
 
 val public_of_secret : secret key -> public key
 (** [public_of_secret k] is public key of [k]. It makes a fresh allocated

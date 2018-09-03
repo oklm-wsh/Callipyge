@@ -354,10 +354,11 @@ let string_of_key : _ key -> string =
   (* assert (Array.length x = 32); *)
   String.init 32 (Char.chr <.> Array.get x)
 
-let ecdh_base : out:int array -> secret:secret key -> unit =
+let ecdh_base_inplace : out:int array -> secret:secret key -> unit =
  fun ~out ~secret -> curve25519_base out secret
 
-let ecdh : out:int array -> secret:secret key -> public:public key -> unit =
+let ecdh_inplace :
+    out:int array -> secret:secret key -> public:public key -> unit =
  fun ~out ~secret ~public -> curve25519 out secret public
 
 let public_of_secret : secret key -> public key =
